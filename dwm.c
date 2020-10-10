@@ -473,7 +473,6 @@ buttonpress(XEvent *e)
 	Client *c;
 	Monitor *m;
 	XButtonPressedEvent *ev = &e->xbutton;
-
 	click = ClkRootWin;
 	/* focus monitor if necessary */
 	if ((m = wintomon(ev->window)) && m != selmon) {
@@ -490,24 +489,24 @@ buttonpress(XEvent *e)
 			click = ClkTagBar;
 			arg.ui = 1 << i;
 		} else if (ev->x < x + blw)
-			click = ClkLtSymbol;
+				click = ClkLtSymbol;
 		else if (ev->x > selmon->ww - (int)TEXTW(stext) - getsystraywidth() + lrpad - 2)
 			click = ClkStatusText;
-        else {
-            x += blw;
-			c = m->clients;
-
+			else {
+				x += blw;
+				c = m->clients;
+				
 			do {
 				if (!ISVISIBLE(c))
 					continue;
 				else
 					x += (1.0 / (double)m->bt) * m->btw;
 			} while (ev->x > x && (c = c->next));
-
+					
 			if (c) {
 				click = ClkWinTitle;
 				arg.v = c;
-			}			
+			}
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
